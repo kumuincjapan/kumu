@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { scrapeECSite } from '@/lib/scraper';
-import { analyzeECSite } from '@/lib/openai';
+import { analyzeECSite } from '@/lib/claude';
 
 function isValidUrl(url: string): boolean {
   try {
@@ -35,9 +35,9 @@ export async function POST(request: NextRequest) {
     if (!isValidEmail(email)) {
       return NextResponse.json({ error: '有効なメールアドレスを入力してください。' }, { status: 400 });
     }
-    if (!process.env.OPENAI_API_KEY) {
+    if (!process.env.ANTHROPIC_API_KEY) {
       return NextResponse.json(
-        { error: 'サーバー設定エラー: OpenAI APIキーが設定されていません。' },
+        { error: 'サーバー設定エラー: Anthropic APIキーが設定されていません。' },
         { status: 500 }
       );
     }
